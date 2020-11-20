@@ -19,6 +19,9 @@ export default class Navbar extends Component {
           <Link to="/insert_county" className="nav-link">Insert County</Link>
           </li>
           <li className="navbar-item">
+          <Link to="/update_county" className="nav-link">Update County</Link>
+          </li>
+          <li className="navbar-item">
           <Link to="/random" className="nav-link">Delete County</Link>
           </li>
         </ul>

@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Navbar from "./components/navbar.component"
 import CovidByState from "./components/covid_by_state_name"
 import InsertCounty from "./components/insert_county"
+import UpdateCounty from "./components/update_county"
 
 class App extends Component {
   render() {
@@ -15,6 +16,7 @@ class App extends Component {
           <br />
           <Route path="/" exact component={CovidByState} />
           <Route path="/insert_county" exact component={InsertCounty} />
+          <Route path="/update_county" exact component={UpdateCounty} />
           {/* <Route path="/edit/:id" component={EditExercise} />
   <Route path="/create" component={CreateExercise} />
   <Route path="/user" component={CreateUser} /> */}
