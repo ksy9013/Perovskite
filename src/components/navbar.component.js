@@ -16,7 +16,7 @@ export default class Navbar extends Component {
           <Link to="/create" className="nav-link">Covid Data by 3 Attributes</Link>
           </li>
           <li className="navbar-item">
-          <Link to="/user" className="nav-link">Insert County</Link>
+          <Link to="/insert_county" className="nav-link">Insert County</Link>
           </li>
           <li className="navbar-item">
           <Link to="/random" className="nav-link">Delete County</Link>

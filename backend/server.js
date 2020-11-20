@@ -48,6 +48,19 @@ app.get('/get_all_distict_states',(req,res)=>{
   })
 });
 
+app.post('/insert_county',(req,res)=>{
+  sql_connection.query(`INSERT INTO COUNTIES(COUNTIES.County_Name, COUNTIES.State_Ab, COUNTIES.Population) VALUES (\'${req.body.County_Name}\',\'${req.body.State_Ab}\',\'${req.body.Population}\')`, (err, result)=> {
+    if (err) {
+      return res.json({status : "FAILED TO INSERT"})
+    }
+    else {
+      res.json({
+        status: "SUCCESSFULLY INSERTED"
+      })
+    }
+  })
+});
+
 // const uri = process.env.ATLAS_URI;
 // mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true }
 // );

@@ -3,11 +3,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import Navbar from "./components/navbar.component"
-import ExercisesList from "./components/exercises-list.component";
-import EditExercise from "./components/edit-exercise.component";
-import CreateExercise from "./components/create-exercise.component";
-import CreateUser from "./components/create-user.component";
 import CovidByState from "./components/covid_by_state_name"
+import InsertCounty from "./components/insert_county"
 
 class App extends Component {
   render() {
@@ -17,6 +14,7 @@ class App extends Component {
           <Navbar />
           <br />
           <Route path="/" exact component={CovidByState} />
+          <Route path="/insert_county" exact component={InsertCounty} />
           {/* <Route path="/edit/:id" component={EditExercise} />
   <Route path="/create" component={CreateExercise} />
   <Route path="/user" component={CreateUser} /> */}
