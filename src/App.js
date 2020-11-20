@@ -7,6 +7,7 @@ import ExercisesList from "./components/exercises-list.component";
 import EditExercise from "./components/edit-exercise.component";
 import CreateExercise from "./components/create-exercise.component";
 import CreateUser from "./components/create-user.component";
+import CovidByState from "./components/covid_by_state_name"
 
 
 //For testing
@@ -19,27 +20,31 @@ const state = {
 }
 
 class App extends Component {
-  componentDidMount() {
-    axios.post('http://localhost:5000/covid_by_state', state)
-      .then(res => console.log(res.data))
-      .catch(err => console.error(err));
-  }
   render() {
     return (
-      <div>Hello Kaylee!</div>
+      <Router>
+  <div className="container">
+  <Navbar />
+  <br/>
+  <Route path="/" exact component={CovidByState} />
+  {/* <Route path="/edit/:id" component={EditExercise} />
+  <Route path="/create" component={CreateExercise} />
+  <Route path="/user" component={CreateUser} /> */}
+  </div>
+</Router>
     );
   }
-    // <Router>
-    //   <div className="container">
-    //   <Navbar />
-    //   <br/>
-    //   <Route path="/" exact component={ExercisesList} />
-    //   <Route path="/edit/:id" component={EditExercise} />
-    //   <Route path="/create" component={CreateExercise} />
-    //   <Route path="/user" component={CreateUser} />
-    //   </div>
-    // </Router>
     
+//   <Router>
+//   <div className="container">
+//   <Navbar />
+//   <br/>
+//   <Route path="/" exact component={ExercisesList} />
+//   <Route path="/edit/:id" component={EditExercise} />
+//   <Route path="/create" component={CreateExercise} />
+//   <Route path="/user" component={CreateUser} />
+//   </div>
+// </Router>
     // <form method='post' action='http://localhost:5000/'>
     //   <div className='submit'>
     //     <input type='submit'/>

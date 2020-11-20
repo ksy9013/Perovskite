@@ -36,6 +36,20 @@ app.post('/covid_by_state',(req,res)=>{
   })
 });
 
+app.get('/get_all_distict_states',(req,res)=>{
+  sql_connection.query(`SELECT DISTINCT State_Ab FROM COVIDDATA`, (err, result)=> {
+    if (err) {
+      return res.send(err)
+    }
+    else {
+      console.log("Got all distict states");
+      res.json({
+        data: result
+      })
+    }
+  })
+});
+
 // const uri = process.env.ATLAS_URI;
 // mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true }
 // );
