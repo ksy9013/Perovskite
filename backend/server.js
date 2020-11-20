@@ -87,6 +87,18 @@ app.post('/update_county', (req, res) => {
   })
 })
 
+app.post('/delete_county', (req, res) => {
+  sql_connection.query(`DELETE FROM COUNTIES WHERE State_Ab = \'${req.body.State_Ab}\' AND County_Name = \'${req.body.County_Name}\'`, (err, result) => {
+    if (err) {
+      return res.json({ status: `FAILED TO DELETE \'${req.body.County_Name}\' IN \'${req.body.State_Ab}\'` })
+    }
+    else {
+      res.json({
+        status: `SUCCESSFULLY DELETED \'${req.body.County_Name}\' IN \'${req.body.State_Ab}\''`
+      })
+    }
+  })
+})
 // const uri = process.env.ATLAS_URI;
 // mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true }
 // );

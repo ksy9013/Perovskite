@@ -6,6 +6,7 @@ import Navbar from "./components/navbar.component"
 import CovidByState from "./components/covid_by_state_name"
 import InsertCounty from "./components/insert_county"
 import UpdateCounty from "./components/update_county"
+import DeleteCounty from "./components/delete_county"
 
 class App extends Component {
   render() {
@@ -17,6 +18,7 @@ class App extends Component {
           <Route path="/" exact component={CovidByState} />
           <Route path="/insert_county" exact component={InsertCounty} />
           <Route path="/update_county" exact component={UpdateCounty} />
+          <Route path="/delete_county" exact component={DeleteCounty} />
           {/* <Route path="/edit/:id" component={EditExercise} />
   <Route path="/create" component={CreateExercise} />
   <Route path="/user" component={CreateUser} /> */}

@@ -22,7 +22,7 @@ export default class Navbar extends Component {
           <Link to="/update_county" className="nav-link">Update County</Link>
           </li>
           <li className="navbar-item">
-          <Link to="/random" className="nav-link">Delete County</Link>
+          <Link to="/delete_county" className="nav-link">Delete County</Link>
           </li>
         </ul>
         </div>
