@@ -23,14 +23,13 @@ sql_connection.connect(err => {
 });
 
 app.post('/covid_by_state',(req,res)=>{
-  console.log(req.body.State_Ab);
   sql_connection.query(`SELECT * FROM COVIDDATA WHERE State_Ab = \"${req.body.State_Ab}\"`, (err, result)=> {
     if (err) {
       return res.send(err)
     }
     else {
       res.json({
-        data: result
+        covid_data: result
       })
     }
   })
@@ -42,9 +41,8 @@ app.get('/get_all_distict_states',(req,res)=>{
       return res.send(err)
     }
     else {
-      console.log("Got all distict states");
       res.json({
-        data: result
+        states: result
       })
     }
   })

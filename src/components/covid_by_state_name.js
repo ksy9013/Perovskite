@@ -1,19 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-// const Exercise = props => (
-//   <tr>
-//     <td>{props.exercise.username}</td>
-//     <td>{props.exercise.description}</td>
-//     <td>{props.exercise.duration}</td>
-//     <td>{props.exercise.date.substring(0,10)}</td>
-//     <td>
-//       <Link to={"/edit/"+props.exercise._id}>edit</Link> | <a href="#" onClick={() => { props.deleteExercise(props.exercise._id) }}>delete</a>
-//     </td>
-//   </tr>
-// )
 
-export default class ExercisesList extends Component {
+export default class CovidDataList extends Component {
     constructor(props) {
         super(props);
         this.onChangeStateAb = this.onChangeStateAb.bind(this);
@@ -30,11 +19,10 @@ export default class ExercisesList extends Component {
     componentDidMount() {
         axios.get('http://localhost:5000/get_all_distict_states/')
             .then(response => {
-                console.log(response);
-                if (response.data.data.length > 0) {
+                if (response.data.states.length > 0) {
                     this.setState({
-                        state_ab_list: response.data.data.map(stateAb => stateAb.State_Ab),
-                        State_Ab: response.data.data[0].State_Ab
+                        state_ab_list: response.data.states.map(stateAb => stateAb.State_Ab),
+                        State_Ab: response.data.states[0].State_Ab
                     })
                 }
             })
@@ -52,6 +40,13 @@ export default class ExercisesList extends Component {
         this.setState({
             State_Ab: e.target.value
         })
+        axios.post('http://localhost:5000/covid_by_state/', {State_Ab:e.target.value})
+            .then(response => {
+                this.setState({
+                    covid_data: response.data.covid_data
+                })
+            })
+            .catch(err => {console.error(err)});
     }
 
     //   deleteExercise(id) {
@@ -63,11 +58,17 @@ export default class ExercisesList extends Component {
     //     })
     //   }
 
-    //   exerciseList() {
-    //     return this.state.exercises.map(currentexercise => {
-    //       return <Exercise exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id}/>;
-    //     })
-    //   }
+      covidDataList() {
+        return this.state.covid_data.map(currenCovidData => {
+          return <tr>
+          <td>{currenCovidData.CDate.substring(0,10)}</td>
+          <td>{currenCovidData.State_Ab}</td>
+          <td>{currenCovidData.County_Name}</td>
+          <td>{currenCovidData.Daily_Count_Cases}</td>
+          <td>{currenCovidData.Daily_Deaths}</td>
+        </tr>;
+        })
+      }
 
     render() {
         return (
@@ -91,23 +92,23 @@ export default class ExercisesList extends Component {
                         </select>
                     </div>
                 </form>
-                {/* <div>
+                <div>
                 <h3>Logged Exercises</h3>
                 <table className="table">
                     <thead className="thead-light">
                         <tr>
-                            <th>Username</th>
-                            <th>Description</th>
-                            <th>Duration</th>
-                            <th>Date</th>
-                            <th>Actions</th>
+                            <th>CDate</th>
+                            <th>State_Ab</th>
+                            <th>County_Name</th>
+                            <th>Daily_Count_Cases</th>
+                            <th>Daily_Deaths</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {this.exerciseList()}
+                        {this.covidDataList()}
                     </tbody>
                 </table>
-            </div> */}
+            </div>
             </div>
         )
     }
