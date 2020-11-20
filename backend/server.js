@@ -6,7 +6,6 @@ const mysql = require('mysql');
 require('dotenv').config();
 
 const app = express();
-const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
@@ -23,13 +22,18 @@ sql_connection.connect(err => {
   }
 });
 
-app.get('/',(req,res)=>{
-  console.log(req);
-  res.json('OK');
-});
-
-app.post('/',(req,res)=>{
-  res.json(req.body);
+app.post('/covid_by_state',(req,res)=>{
+  console.log(req.body.State_Ab);
+  sql_connection.query(`SELECT * FROM COVIDDATA WHERE State_Ab = \"${req.body.State_Ab}\"`, (err, result)=> {
+    if (err) {
+      return res.send(err)
+    }
+    else {
+      res.json({
+        data: result
+      })
+    }
+  })
 });
 
 // const uri = process.env.ATLAS_URI;
@@ -48,6 +52,6 @@ app.post('/',(req,res)=>{
 // app.use('/exercises', exercisesRouter);
 // app.use('/users', usersRouter);
 
-app.listen(port, () => {
-    console.log(`Server is running on port: ${port}`);
+app.listen(5000, () => {
+    console.log(`Server is running on port: 5000`);
 });

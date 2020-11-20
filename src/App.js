@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route} from "react-router-dom";
 
@@ -11,12 +11,24 @@ import CreateUser from "./components/create-user.component";
 
 //For testing
 import axios from 'axios';
+import { render } from 'react-dom';
 
-axios.get('http://localhost:5000/', "Kaylee")
-      .then(res => console.log(res.data));
 
-function App() {
-  return (
+const state = {
+  State_Ab: 'LA',
+}
+
+class App extends Component {
+  componentDidMount() {
+    axios.post('http://localhost:5000/covid_by_state', state)
+      .then(res => console.log(res.data))
+      .catch(err => console.error(err));
+  }
+  render() {
+    return (
+      <div>Hello Kaylee!</div>
+    );
+  }
     // <Router>
     //   <div className="container">
     //   <Navbar />
@@ -27,12 +39,12 @@ function App() {
     //   <Route path="/user" component={CreateUser} />
     //   </div>
     // </Router>
-    <form method='post' action='http://localhost:5000/'>
-      <div className='submit'>
-        <input type='submit'/>
-      </div>
-    </form>
-  );
+    
+    // <form method='post' action='http://localhost:5000/'>
+    //   <div className='submit'>
+    //     <input type='submit'/>
+    //   </div>
+    // </form>
 }
 
 export default App;
