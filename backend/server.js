@@ -1,3 +1,6 @@
+//Din 'Max' Chan, 1001352842
+//Seonyoung 'Kaylee' Kim, 1001757188
+
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql');

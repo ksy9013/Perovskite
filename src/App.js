@@ -1,3 +1,6 @@
+//Din 'Max' Chan, 1001352842
+//Seonyoung 'Kaylee' Kim, 1001757188
+
 import React, { Component } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
@@ -21,29 +24,10 @@ class App extends Component {
           <Route path="/update_county" exact component={UpdateCounty} />
           <Route path="/delete_county" exact component={DeleteCounty} />
           <Route path="/covid_by_3attr" exact component={CovidBy3Attr}/>
-          {/* <Route path="/edit/:id" component={EditExercise} />
-  <Route path="/create" component={CreateExercise} />
-  <Route path="/user" component={CreateUser} /> */}
         </div>
       </Router>
     );
   }
-
-  //   <Router>
-  //   <div className="container">
-  //   <Navbar />
-  //   <br/>
-  //   <Route path="/" exact component={ExercisesList} />
-  //   <Route path="/edit/:id" component={EditExercise} />
-  //   <Route path="/create" component={CreateExercise} />
-  //   <Route path="/user" component={CreateUser} />
-  //   </div>
-  // </Router>
-  // <form method='post' action='http://localhost:5000/'>
-  //   <div className='submit'>
-  //     <input type='submit'/>
-  //   </div>
-  // </form>
 }
 
 export default App;

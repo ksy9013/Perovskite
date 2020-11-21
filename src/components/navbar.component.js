@@ -1,3 +1,6 @@
+//Din 'Max' Chan, 1001352842
+//Seonyoung 'Kaylee' Kim, 1001757188
+
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
