@@ -8,9 +8,7 @@ export default class InsertCounty extends Component {
         this.onChangeCounty = this.onChangeCounty.bind(this);
         this.onChangePopulation = this.onChangePopulation.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        // this.deleteExercise = this.deleteExercise.bind(this)
 
-        // this.state = {exercises: []};
         this.state = {
             County_Name: '',
             State_Ab: '',
@@ -27,7 +25,6 @@ export default class InsertCounty extends Component {
                 if (response.data.states.length > 0) {
                     this.setState({
                         state_ab_list: response.data.states.map(stateAb => stateAb.State_Ab),
-                        // State_Ab: response.data.states[0].State_Ab
                     })
                 }
             })

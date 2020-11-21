@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const mongoose = require('mongoose');
 const mysql = require('mysql');
 
 require('dotenv').config();
@@ -99,21 +98,20 @@ app.post('/delete_county', (req, res) => {
     }
   })
 })
-// const uri = process.env.ATLAS_URI;
-// mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true }
-// );
-// const connection = mongoose.connection;
-// connection.once('open', () => {
-//   console.log("MongoDB database connection established successfully");
-// })
 
+app.post('/populate_coviddata_by_3attr', (req,res) => {
+  sql_connection.query(`SELECT * FROM COVIDDATA WHERE State_Ab = \'${req.body.State_Ab}\' AND County_Name = \'${req.body.County_Name}\' AND CDate = \'${req.body.date.substring(0,10)}\'`, (err, result)=> {
+    if(err) {
+      return res.send(err)
+    }
+    else{
+      res.json({
+        coviddata: result
+      })
+    }
+  })
+})
 
-
-// const exercisesRouter = require('./routes/exercises');
-// const usersRouter = require('./routes/users');
-
-// app.use('/exercises', exercisesRouter);
-// app.use('/users', usersRouter);
 
 app.listen(5000, () => {
   console.log(`Server is running on port: 5000`);

@@ -6,9 +6,7 @@ export default class CovidDataList extends Component {
     constructor(props) {
         super(props);
         this.onChangeStateAb = this.onChangeStateAb.bind(this);
-        // this.deleteExercise = this.deleteExercise.bind(this)
 
-        // this.state = {exercises: []};
         this.state = {
             State_Ab: '',
             state_ab_list: [],
@@ -27,48 +25,32 @@ export default class CovidDataList extends Component {
                 }
             })
             .catch((err) => { console.error(err) });
-        // axios.get('http://localhost:5000/exercises/')
-        //   .then(response => {
-        //     this.setState({ exercises: response.data })
-        //   })
-        //   .catch((error) => {
-        //     console.log(error);
-        //   })
     }
 
     onChangeStateAb(e) {
         this.setState({
             State_Ab: e.target.value
         })
-        axios.post('http://localhost:5000/covid_by_state/', {State_Ab:e.target.value})
+        axios.post('http://localhost:5000/covid_by_state/', { State_Ab: e.target.value })
             .then(response => {
                 this.setState({
                     covid_data: response.data.covid_data
                 })
             })
-            .catch(err => {console.error(err)});
+            .catch(err => { console.error(err) });
     }
 
-    //   deleteExercise(id) {
-    //     axios.delete('http://localhost:5000/exercises/'+id)
-    //       .then(response => { console.log(response.data)});
-
-    //     this.setState({
-    //       exercises: this.state.exercises.filter(el => el._id !== id)
-    //     })
-    //   }
-
-      covidDataList() {
+    covidDataList() {
         return this.state.covid_data.map(currenCovidData => {
-          return <tr>
-          <td>{currenCovidData.CDate.substring(0,10)}</td>
-          <td>{currenCovidData.State_Ab}</td>
-          <td>{currenCovidData.County_Name}</td>
-          <td>{currenCovidData.Daily_Count_Cases}</td>
-          <td>{currenCovidData.Daily_Deaths}</td>
-        </tr>;
+            return <tr>
+                <td>{currenCovidData.CDate.substring(0, 10)}</td>
+                <td>{currenCovidData.State_Ab}</td>
+                <td>{currenCovidData.County_Name}</td>
+                <td>{currenCovidData.Daily_Count_Cases}</td>
+                <td>{currenCovidData.Daily_Deaths}</td>
+            </tr>;
         })
-      }
+    }
 
     render() {
         return (
@@ -93,22 +75,22 @@ export default class CovidDataList extends Component {
                     </div>
                 </form>
                 <div>
-                <h3>Logged Exercises</h3>
-                <table className="table">
-                    <thead className="thead-light">
-                        <tr>
-                            <th>CDate</th>
-                            <th>State_Ab</th>
-                            <th>County_Name</th>
-                            <th>Daily_Count_Cases</th>
-                            <th>Daily_Deaths</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.covidDataList()}
-                    </tbody>
-                </table>
-            </div>
+                    <h3>COVID DATA FOR {this.state.State_Ab}</h3>
+                    <table className="table">
+                        <thead className="thead-light">
+                            <tr>
+                                <th>CDate</th>
+                                <th>State_Ab</th>
+                                <th>County_Name</th>
+                                <th>Daily_Count_Cases</th>
+                                <th>Daily_Deaths</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.covidDataList()}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         )
     }

@@ -8,9 +8,7 @@ export default class UpdateCounty extends Component {
         this.onChangeCounty = this.onChangeCounty.bind(this);
         this.onChangeNewCountyName = this.onChangeNewCountyName.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        // this.deleteExercise = this.deleteExercise.bind(this)
 
-        // this.state = {exercises: []};
         this.state = {
             County_Name: '',
             State_Ab: '',
@@ -28,7 +26,6 @@ export default class UpdateCounty extends Component {
                 if (response.data.states.length > 0) {
                     this.setState({
                         state_ab_list: response.data.states.map(stateAb => stateAb.State_Ab),
-                        // State_Ab: response.data.states[0].State_Ab
                     })
                 }
             })
@@ -50,8 +47,7 @@ export default class UpdateCounty extends Component {
             .then(response => {
                 if (response.data.counties.length > 0) {
                     this.setState({
-                        counties_list: response.data.counties.map(countyName => countyName.County_Name),
-                        // County_Name: response.data.counties[0].County_Name
+                        counties_list: response.data.counties.map(countyName => countyName.County_Name),                        
                     })
                 }
             })
