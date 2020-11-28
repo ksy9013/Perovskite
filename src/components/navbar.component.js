@@ -1,6 +1,3 @@
-//Din 'Max' Chan, 1001352842
-//Seonyoung 'Kaylee' Kim, 1001757188
-
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -9,23 +6,20 @@ export default class Navbar extends Component {
   render() {
     return (
       <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
-        <Link to="/" className="navbar-brand">CovidDB</Link>
+        <Link to="/" className="navbar-brand">Perovskite DB</Link>
         <div className="collpase navbar-collapse">
         <ul className="navbar-nav mr-auto">
           <li className="navbar-item">
-          <Link to="/" className="nav-link">Covid Data by State</Link>
+          <Link to="/display_emp" className="nav-link">Diplay an Employee Info</Link>
+          </li>        
+          <li className="navbar-item">
+          <Link to="/insert_emp" className="nav-link">Add an Employee Info</Link>
           </li>
           <li className="navbar-item">
-          <Link to="/covid_by_3attr" className="nav-link">Covid Data by 3 Attributes</Link>
+          <Link to="/update_emp" className="nav-link">Update an Employee Info</Link>
           </li>
           <li className="navbar-item">
-          <Link to="/insert_county" className="nav-link">Insert County</Link>
-          </li>
-          <li className="navbar-item">
-          <Link to="/update_county" className="nav-link">Update County</Link>
-          </li>
-          <li className="navbar-item">
-          <Link to="/delete_county" className="nav-link">Delete County</Link>
+          <Link to="/delete_emp" className="nav-link">Delete an Employee Info</Link>
           </li>
         </ul>
         </div>

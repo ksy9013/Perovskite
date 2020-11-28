@@ -11,111 +11,145 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
 const sql_connection = mysql.createConnection({
-  host: 'covid.c1obqc4j40zi.us-east-2.rds.amazonaws.com',
+  host: 'perovkite-solar.c1obqc4j40zi.us-east-2.rds.amazonaws.com',
   user: 'admin',
-  password: '1Pass43330!',
-  database: 'covid_phase_2'
+  password: 'password',
+  database: 'perovskite_solar',
+  port: 3380
 });
 
 sql_connection.connect(err => {
   if (err) {
+    console.log('ERROR!');
     return err;
+  }
+  else {
+    console.log('CONNECTED!');
   }
 });
 
-app.post('/covid_by_state', (req, res) => {
-  sql_connection.query(`SELECT * FROM COVIDDATA WHERE State_Ab = \"${req.body.State_Ab}\"`, (err, result) => {
+app.get('/get_emp_type', (req, res) => {
+  sql_connection.query(`SELECT DISTINCT e_type FROM SALES_REP UNION SELECT e_type FROM TECHNICIAN UNION SELECT e_type FROM ASSEMBLER`, (err, result) => {
     if (err) {
       return res.send(err)
     }
     else {
       res.json({
-        covid_data: result
+        types: result
       })
     }
   })
 });
 
-app.get('/get_all_distict_states', (req, res) => {
-  sql_connection.query(`SELECT DISTINCT State_Ab FROM COVIDDATA`, (err, result) => {
+app.post('/insert_info', (req, res) => {
+  sql_connection.query(`INSERT INTO ?? (ID, Fname, Lname, SSN, Pay, Start_Date, e_type) 
+  VALUES (\'${req.body.ID}\',\'${req.body.Fname}\',\'${req.body.Lname}\',\'${req.body.SSN}\',\'${req.body.Pay}\', \'${req.body.Start_Date}\', \'${req.body.e_type}\')`, [req.body.e_type], (err, result) => {
+    if (err) {
+      return res.json({ status: 'FAILED TO INSERT ' + req.body.e_type })
+    }
+    else {
+      res.json({
+        status: `SUCCESSFULLY INSERTED !!!`
+      })
+    }
+  })
+});
+
+
+app.post('/get_all_emp_info', (req, res) => {
+  sql_connection.query(`SELECT ID, Fname, Lname, SSN, Pay, Start_Date, e_type FROM ?? 
+  WHERE ID = \'${req.body.ID}\'`, [req.body.e_type], (err, result) => {
     if (err) {
       return res.send(err)
     }
+    else if (result.message === null) {
+      return res.json({ status: `There's no result.` })
+    }
     else {
       res.json({
-        states: result
+        empdata: result
       })
     }
   })
 });
 
-app.post('/insert_county', (req, res) => {
-  sql_connection.query(`INSERT INTO COUNTIES(COUNTIES.County_Name, COUNTIES.State_Ab, COUNTIES.Population) VALUES (\'${req.body.County_Name}\',\'${req.body.State_Ab}\',\'${req.body.Population}\')`, (err, result) => {
-    if (err) {
-      return res.json({ status: `FAILED TO INSERT (\'${req.body.County_Name}\',\'${req.body.State_Ab}\',\'${req.body.Population}\')` })
-    }
-    else {
-      res.json({
-        status:`SUCCESSFULLY INSERTED (\'${req.body.County_Name}\',\'${req.body.State_Ab}\',\'${req.body.Population}\')`
-      })
-    }
-  })
-});
-
-app.post('/get_all_distict_counties', (req, res) => {
-  sql_connection.query(`SELECT DISTINCT County_Name FROM COUNTIES WHERE State_Ab=\'${req.body.State_Ab}\'`, (err, result) => {
+app.post('/display_all_emp_info', (req, res) => {
+  sql_connection.query(`SELECT ID, Fname, Lname, SSN, Pay, Start_Date, e_type FROM ?? 
+  WHERE e_type = \'${req.body.e_type}\'`, [req.body.e_type], (err, result) => {
     if (err) {
       return res.send(err)
     }
+    else if (result.message === null) {
+      return res.json({ status: `There's no result.` })
+    }
     else {
       res.json({
-        counties: result
+        empdata: result
       })
     }
   })
 });
 
-app.post('/update_county', (req, res) => {
-  sql_connection.query(`UPDATE COUNTIES SET County_Name = \'${req.body.New_County_Name}\' WHERE State_Ab = \'${req.body.State_Ab}\' AND County_Name = \'${req.body.County_Name}\'`, (err, result) => {
+app.post('/delete_emp', (req, res) => {
+  sql_connection.query(`DELETE FROM ?? WHERE e_type = \'${req.body.e_type}\' AND ID = \'${req.body.ID}\'`, [req.body.e_type], (err, result, fields) => {
     if (err) {
-      return res.json({ status: `FAILED TO UPDATE FROM \'${req.body.County_Name}\' TO \'${req.body.New_County_Name}\' IN \'${req.body.State_Ab}\'` })
+      return res.json({ status: `FAILED TO DELETE \'${req.body.ID}\' IN \'${req.body.e_type}\'` })
     }
+    else if (result.message === null) {
+      return res.json({ status: `Cannot delete. Please enter the correct information.` })
+    }
+
     else {
       res.json({
-        status: `SUCCESSFULLY UPDATED FROM \'${req.body.County_Name}\' TO \'${req.body.New_County_Name}\' IN \'${req.body.State_Ab}\'`
+        status: `SUCCESSFULLY DELETED!!!`
       })
     }
+
   })
 })
 
-app.post('/delete_county', (req, res) => {
-  sql_connection.query(`DELETE FROM COUNTIES WHERE State_Ab = \'${req.body.State_Ab}\' AND County_Name = \'${req.body.County_Name}\'`, (err, result) => {
-    if (err) {
-      return res.json({ status: `FAILED TO DELETE \'${req.body.County_Name}\' IN \'${req.body.State_Ab}\'` })
-    }
-    else {
-      res.json({
-        status: `SUCCESSFULLY DELETED \'${req.body.County_Name}\' IN \'${req.body.State_Ab}\''`
-      })
-    }
-  })
-})
+app.post('/update_emp', (req, res) => {
+  if (req.body.e_type != req.body.New_eType) {
+    sql_connection.query(`INSERT INTO ?? (ID, Fname, Lname, SSN, Pay, Start_Date, e_type) 
+    VALUES (\'${req.body.emp_data[0].ID}\',\'${req.body.New_Fname}\',\'${req.body.New_Lname}\',\'${req.body.emp_data[0].SSN}\',\'${req.body.New_Pay}\', \'${req.body.emp_data[0].Start_Date}\', \'${req.body.New_eType}\')`, [req.body.New_eType], (err, result) => {
+      if (err) {
+        return res.json({ status: `FAILED TO INSERT AN INFO TO \'${req.body.New_eType}\'` })
+      }
+      else {
+        sql_connection.query(`DELETE FROM ?? WHERE e_type = \'${req.body.e_type}\' AND ID = \'${req.body.ID}\'`, [req.body.e_type], (err, result, fields) => {
+          if (err) {
+            return res.json({ status: `FAILED TO DELETE \'${req.body.ID}\' IN \'${req.body.e_type}\'` })
+          }
+          else if (result.message === null) {
+            return res.json({ status: `Cannot delete. Please enter the correct information.` })
+          }     
+        })
+        res.json({
+          status: `SUCCESSFULLY UPDATED!!`
+        })
+      }
+    })
+  }
 
-app.post('/populate_coviddata_by_3attr', (req,res) => {
-  sql_connection.query(`SELECT * FROM COVIDDATA WHERE State_Ab = \'${req.body.State_Ab}\' AND County_Name = \'${req.body.County_Name}\' AND CDate = \'${req.body.date.substring(0,10)}\'`, (err, result)=> {
-    if(err) {
-      return res.send(err)
-    }
-    else{
-      res.json({
-        coviddata: result
-      })
-    }
-  })
+  else {
+    sql_connection.query(`UPDATE ?? SET e_type = \'${req.body.New_eType}\', Pay = \'${req.body.New_Pay}\', Fname = \'${req.body.New_Fname}\', Lname = \'${req.body.New_Lname}\' WHERE ID = \'${req.body.emp_data[0].ID}\'`, [req.body.e_type], (err, result) => {
+      if (err) {
+        return res.json({ status: `FAILED TO UPDATE THE INFORMATION` })
+      }
+      else {
+        res.json({
+          status: `SUCCESSFULLY UPDATED!`
+        })
+      }
+    })
+  }
 })
 
 
 app.listen(5000, () => {
   console.log(`Server is running on port: 5000`);
 });
+
+

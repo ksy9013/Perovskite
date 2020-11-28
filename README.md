@@ -1,4 +1,4 @@
-## COVID PROJECT CSE3330
+## PEROVSKITE SOLAR PROJECT CSE3330
 Full-stack project built on MERN Stack (Mysql, Express, React, NodeJS). Mysql is linked to Amazon RDS. Both serverside and frontend are run locally (not deployment).
 #### Before you Start
 ```bash
@@ -20,9 +20,9 @@ to update required `node_modules` for backend part
 * `npm start` in frontend directory
 #### Amazon RDS Credentials
 ```
-Hostname: covid.c1obqc4j40zi.us-east-2.rds.amazonaws.com
-Port: 3306
+Hostname: perovkite-solar.c1obqc4j40zi.us-east-2.rds.amazonaws.com
+Port: 3380
 Username: admin
-Password: 1Pass43330! (this is case-sensitive)
+Password: password (this is case-sensitive)
 ```
 
